@@ -9,8 +9,6 @@ Welcome to the Movies Application! This project consists of a .NET Web API for m
 To run the Movies Application, you'll need the following:
 
 - [.NET Core SDK](https://dotnet.microsoft.com/download)
-- [Node.js](https://nodejs.org/)
-- [npm (Node Package Manager)](https://www.npmjs.com/)
 
 ### Installation
 
