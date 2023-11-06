@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieAPI.Models;
-#nullable disable
 
 namespace MovieAPI.Controllers.API
 {
@@ -41,12 +40,12 @@ namespace MovieAPI.Controllers.API
 
                 if (genre != null)
                 {
-                    querys = querys.Where(movie => movie.Genre.Contains(genre));
+                    querys = querys.Where(movie => movie.Genre != null && movie.Genre.Contains(genre));
                 }
 
                 if (title != null)
                 {
-                    querys = querys.Where(movie => movie.Title.Contains(title));
+                    querys = querys.Where(movie => movie.Title != null && movie.Title.Contains(title));
                 }
 
                 if (isReleaseDateOrdered)
