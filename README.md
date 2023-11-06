@@ -19,8 +19,10 @@ To run the Movies Application, you'll need the following:
 
 cd moviesapplication
 
-dotnet restore
-dotnet run -> will run the api
+#### cmd 
+
+- dotnet restore
+- dotnet run -> will run the api
 
 # Viewing Frontend Design
 
