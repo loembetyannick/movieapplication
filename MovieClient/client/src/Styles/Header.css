@@ -1,0 +1,17 @@
+.header-container {
+    border:1px solid white;
+    width: 100vw;
+    height: 10vh;
+    color: white;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+    border:1px solid red;
+}
+
+.header-left p{
+    margin-right: 10px;
+}
