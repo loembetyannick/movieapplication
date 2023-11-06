@@ -1,6 +1,6 @@
 # Movies Application
 
-Welcome to the Movies Application! This project consists of a .NET Web API for managing movie data and a design for a potiential frontend application that would be built with React.
+Welcome to the Movies Application! This project consists of a .NET Web API for managing movie data and a design for a potiential frontend application that would be built with Blazor.
 
 ## Getting Started
 
@@ -23,10 +23,11 @@ cd moviesapplication
 
 - dotnet restore
 - dotnet run -> will run the api
+- press the play button on MovieAPI
 
 # Viewing Frontend Design
 
-You can view the design for the frontend in React using Figma:
+You can view the design for the frontend in Blazor using Figma:
 
 - [Figma Design](https://www.figma.com/proto/zlzifSF8YyYlEywxqfQyTJ/moviesapplication?type=design&node-id=1-2&t=ZipgcCrkgLxYkIlR-1&scaling=min-zoom&page-id=0%3A1&starting-point-node-id=1%3A2&mode=design)
 
