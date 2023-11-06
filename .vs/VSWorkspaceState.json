@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\MovieAPI"
+    "\\MovieAPI",
+    "\\MovieAPI\\MovieAPI"
   ],
-  "SelectedNode": "\\MovieAPI\\DockerFile",
+  "SelectedNode": "\\MovieAPI\\MovieAPI\\MovieAPI.csproj",
   "PreviewInSolutionExplorer": false
 }

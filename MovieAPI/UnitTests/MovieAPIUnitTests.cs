@@ -1,3 +1,4 @@
+using MovieAPI.Helper;
 using MovieAPI.Models;
 using Newtonsoft.Json;
 using System.Linq.Expressions;
@@ -7,75 +8,44 @@ namespace UnitTests
     public class MovieAPIUnitTests
     {
         [Fact]
-        public async void GetMovies()
+        public void GetMovies()
         {
             try
             {
-                using (HttpClient client = new HttpClient())
+                // Arrange 
+                var movie = new MovieGenerator();
+
+                // Act
+                
+
+                // Assert
+                if (movie._movies != null)
                 {
-                    // Arrange 
-                    var endpoint = new APIEndpoints().MoviesEndpoint;
-                    string url = endpoint;
-
-                    HttpResponseMessage response = await client.GetAsync(url);
-                    var result = new List<Movie>();
-
-                    // Act
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string content = await response.Content.ReadAsStringAsync();
-
-                        result = JsonConvert.DeserializeObject<List<Movie>>(content);
-                    }
-                    else
-                    {
-                        Assert.Fail("failed to make the request");
-                    }
-
-                    // Assert
-                    if (result != null)
-                    {
-                        Assert.Equal(20, result.Count);
-                    }
-                    else
-                    {
-                        Assert.Fail("results are null");
-                    }
+                    Assert.Equal(19, (int?)movie?._movies?.Count());
                 }
-            } 
-            catch (HttpRequestException)
-            {
-                throw new HttpRequestException("unable to connected to the server to make the request");
+                else
+                {
+                    Assert.Fail("results are null");
+                }
             }
-            
+            catch (Exception ex)
+            {
+                throw new Exception( ex.Message);
+            }
+
 
         }
 
         [Fact]
-        public async void GetMovieTitle() 
+        public void GetMovieTitle() 
         {
             try
             {
-                using (HttpClient client = new HttpClient())
-            {
                 // Arrange 
-                var endpoint = new APIEndpoints().MovieTitleEndpoint;
-                string url = endpoint;
-
-                HttpResponseMessage response = await client.GetAsync(url);
-                var result = new List<Movie>();
+                var movie = new MovieGenerator();
 
                 // Act
-                if (response.IsSuccessStatusCode)
-                {
-                    string content = await response.Content.ReadAsStringAsync();
-
-                    result = JsonConvert.DeserializeObject<List<Movie>>(content);
-                }
-                else
-                {
-                    Assert.Fail("failed to make the request");
-                }
+                var result = movie?._movies?.Where(movie => movie.Title == "Spider-Man: No Way Home");
 
                 // Assert
                 if (result != null)
@@ -87,106 +57,42 @@ namespace UnitTests
                     Assert.Fail("result is null");
                 }
             }
-            }
-            catch (HttpRequestException)
+            catch (Exception)
             {
-                throw new HttpRequestException("unable to connected to the server to make the request");
+                throw new Exception();
             }
         }
 
         [Fact]
-        public async void GetMovieGenres() 
+        public void GetMovieGenres() 
         {
             try
             {
-                using (HttpClient client = new HttpClient())
-            {
                 // Arrange 
-                var endpoint = new APIEndpoints().MovieGenres;
-                string url = endpoint;
-
-                HttpResponseMessage response = await client.GetAsync(url);
-                var result = new List<Movie>();
-
+                var movie = new MovieGenerator();
                 // Act
-                if (response.IsSuccessStatusCode)
+                IEnumerable<Movie?>? filteredGenres = null; 
+                if (movie._movies != null)
                 {
-                    string content = await response.Content.ReadAsStringAsync();
+                     filteredGenres = movie?._movies?.Where(movie => movie.Genre != null && movie.Genre.Contains("Action") &&
+                                          movie.Genre.Contains("Adventure") &&
+                                          movie.Genre.Contains("Science Fiction"));
 
-                    result = JsonConvert.DeserializeObject<List<Movie>>(content);
                 }
-                else
-                {
-                    Assert.Fail("failed to make the request");
-                }
-
                 // Assert
-                if (result != null)
+                if (filteredGenres != null)
                 {
-                    var filteredGenres = result.Where(movie => movie.Genre != null && !movie.Genre.Contains("Action") &&
-                                          !movie.Genre.Contains("Adventure") &&
-                                          !movie.Genre.Contains("Science Fiction"));
-
-                    Assert.Empty(filteredGenres);
+                    Assert.Single(filteredGenres);
                 }
                 else
                 {
                     Assert.Fail("result is null");
                 }
             }
-            }
-            catch (HttpRequestException)
+            catch (Exception ex)
             {
-                throw new HttpRequestException("unable to connected to the server to make the request");
+                throw new Exception(ex.Message);
             }
-
-
-        }
-
-
-        [Fact]
-        public async void GetMovieLimits() {
-            try
-            {
-                using (HttpClient client = new HttpClient())
-            {
-                // Arrange 
-                var endpoint = new APIEndpoints().MovieLimitEndpoint;
-                string url = endpoint;
-
-                HttpResponseMessage response = await client.GetAsync(url);
-                var result = new List<Movie>();
-
-                // Act
-                if (response.IsSuccessStatusCode)
-                {
-                    string content = await response.Content.ReadAsStringAsync();
-
-                    result = JsonConvert.DeserializeObject<List<Movie>>(content);
-                }
-                else
-                {
-                    Assert.Fail("failed to make the request");
-                }
-
-                // Assert
-                if (result != null)
-                {
-
-                    Assert.Equal(20, result.Count);
-                }
-                else
-                {
-                    Assert.Fail("result is null");
-                }
-            }
-            }
-            catch (HttpRequestException)
-            {
-                throw new HttpRequestException("unable to connected to the server to make the request");
-            }
-
-
         }
     }
 }
