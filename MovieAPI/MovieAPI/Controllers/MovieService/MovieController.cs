@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieAPI.Models;
 #nullable disable
-namespace MovieAPI.Controllers
+namespace MovieAPI.Controllers.MovieService
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -13,13 +12,13 @@ namespace MovieAPI.Controllers
 
         public MovieController(MoviesdbContext context)
         {
-                _context = context;
+            _context = context;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movie>>> Movies(
-            [FromQuery] int startLimit, 
-            [FromQuery] int endLimit, 
+            [FromQuery] int startLimit,
+            [FromQuery] int endLimit,
             [FromQuery] string genre,
             [FromQuery] string title,
             [FromQuery] bool isReleaseDateOrdered,
@@ -28,17 +27,17 @@ namespace MovieAPI.Controllers
         {
             var querys = _context.Movies.Take(limit);
 
-            if(startLimit != 0 || endLimit != 0)
+            if (startLimit != 0 || endLimit != 0)
             {
                 querys = querys.Where(movie => movie.Id >= startLimit && movie.Id <= endLimit);
             }
 
-            if(genre != null)
+            if (genre != null)
             {
                 querys = querys.Where(movie => movie.Genre.Contains(genre));
             }
 
-            if(title != null)
+            if (title != null)
             {
                 querys = querys.Where(movie => movie.Title.Contains(title));
             }
