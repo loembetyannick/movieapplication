@@ -1,5 +1,6 @@
 using MovieAPI.Models;
 using Newtonsoft.Json;
+using System.Linq.Expressions;
 
 namespace UnitTests
 {
@@ -8,44 +9,54 @@ namespace UnitTests
         [Fact]
         public async void GetMovies()
         {
-            using(HttpClient client = new HttpClient())
+            try
             {
-                // Arrange 
-                var endpoint = new APIEndpoints().MoviesEndpoint;
-                string url = endpoint;
-
-                HttpResponseMessage response = await client.GetAsync(url);
-                var result = new List<Movie>();
-                
-                // Act
-                if(response.IsSuccessStatusCode)
+                using (HttpClient client = new HttpClient())
                 {
-                    string content = await response.Content.ReadAsStringAsync();
+                    // Arrange 
+                    var endpoint = new APIEndpoints().MoviesEndpoint;
+                    string url = endpoint;
 
-                    result = JsonConvert.DeserializeObject<List<Movie>>(content);
-                } 
-                else
-                {
-                    Assert.Fail("failed to make the request");
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    var result = new List<Movie>();
+
+                    // Act
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string content = await response.Content.ReadAsStringAsync();
+
+                        result = JsonConvert.DeserializeObject<List<Movie>>(content);
+                    }
+                    else
+                    {
+                        Assert.Fail("failed to make the request");
+                    }
+
+                    // Assert
+                    if (result != null)
+                    {
+                        Assert.Equal(20, result.Count);
+                    }
+                    else
+                    {
+                        Assert.Fail("results are null");
+                    }
                 }
-
-                // Assert
-                if(result != null)
-                {
-                    Assert.Equal(20, result.Count);
-                } 
-                else
-                {
-                    Assert.Fail("results are null");
-                }
+            } 
+            catch (HttpRequestException)
+            {
+                throw new HttpRequestException("unable to connected to the server to make the request");
             }
+            
 
         }
 
         [Fact]
         public async void GetMovieTitle() 
         {
-            using (HttpClient client = new HttpClient())
+            try
+            {
+                using (HttpClient client = new HttpClient())
             {
                 // Arrange 
                 var endpoint = new APIEndpoints().MovieTitleEndpoint;
@@ -76,12 +87,19 @@ namespace UnitTests
                     Assert.Fail("result is null");
                 }
             }
+            }
+            catch (HttpRequestException)
+            {
+                throw new HttpRequestException("unable to connected to the server to make the request");
+            }
         }
 
         [Fact]
         public async void GetMovieGenres() 
         {
-            using (HttpClient client = new HttpClient())
+            try
+            {
+                using (HttpClient client = new HttpClient())
             {
                 // Arrange 
                 var endpoint = new APIEndpoints().MovieGenres;
@@ -116,12 +134,21 @@ namespace UnitTests
                     Assert.Fail("result is null");
                 }
             }
+            }
+            catch (HttpRequestException)
+            {
+                throw new HttpRequestException("unable to connected to the server to make the request");
+            }
+
+
         }
 
 
         [Fact]
         public async void GetMovieLimits() {
-            using (HttpClient client = new HttpClient())
+            try
+            {
+                using (HttpClient client = new HttpClient())
             {
                 // Arrange 
                 var endpoint = new APIEndpoints().MovieLimitEndpoint;
@@ -152,6 +179,11 @@ namespace UnitTests
                 {
                     Assert.Fail("result is null");
                 }
+            }
+            }
+            catch (HttpRequestException)
+            {
+                throw new HttpRequestException("unable to connected to the server to make the request");
             }
 
 

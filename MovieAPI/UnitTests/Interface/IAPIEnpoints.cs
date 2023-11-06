@@ -16,6 +16,5 @@ namespace UnitTests.Interface
 
         string MovieLimitEndpoint { get; }
 
-        string SingleMovieEndpoint { get; }
     }
 }
